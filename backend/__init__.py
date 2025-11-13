@@ -1,11 +1,3 @@
-from __future__ import annotations
+from backend.create_app import create_app
 
-from fastapi import FastAPI
-
-from backend import routes
-
-
-def create_app() -> FastAPI:
-    app = FastAPI(title="MC Verify API")
-    app.include_router(routes.router)
-    return app
+__all__ = ["create_app"]

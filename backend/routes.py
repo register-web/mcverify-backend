@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import Depends, HTTPException, Query
+from fastapi.routing import APIRouter
 from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
@@ -16,8 +17,13 @@ from db import models
 from utils.config import get_settings
 from utils.security import needs_reverification, sha256_hex, utcnow, verify_telegram_hash
 
-router = APIRouter(prefix="/api", tags=["mcverify"])
+router = APIRouter()
 settings = get_settings()
+
+
+@router.get("/test", tags=["health"])
+async def test_endpoint() -> dict[str, str]:
+    return {"msg": "ok"}
 
 
 def _player_to_response(player: models.Player) -> PlayerResponse:
@@ -33,7 +39,7 @@ def _player_to_response(player: models.Player) -> PlayerResponse:
     )
 
 
-@router.post("/register", response_model=PlayerResponse)
+@router.post("/api/register", response_model=PlayerResponse, tags=["mcverify"])
 def register_player(
     payload: RegisterRequest,
     session: Session = Depends(get_db),
@@ -83,7 +89,7 @@ def register_player(
     return _player_to_response(player)
 
 
-@router.post("/set_password", response_model=PlayerResponse)
+@router.post("/api/set_password", response_model=PlayerResponse, tags=["mcverify"])
 def set_password(
     payload: PasswordRequest,
     session: Session = Depends(get_db),
@@ -100,7 +106,7 @@ def set_password(
     return _player_to_response(player)
 
 
-@router.post("/change_name", response_model=PlayerResponse)
+@router.post("/api/change_name", response_model=PlayerResponse, tags=["mcverify"])
 def change_name(
     payload: ChangeNameRequest,
     session: Session = Depends(get_db),
@@ -122,7 +128,7 @@ def change_name(
     return _player_to_response(player)
 
 
-@router.get("/status", response_model=StatusResponse)
+@router.get("/api/status", response_model=StatusResponse, tags=["mcverify"])
 def status(
     player: str = Query(..., description="Minecraft nickname"),
     ip: str = Query(..., description="Player IP address"),
