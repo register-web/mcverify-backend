@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Minecraft Verify</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-api-base="https://mcverify.up.railway.app/api">
+    <main class="app">
+      <section class="card state-card" id="loading-card">
+        <div class="loader" aria-hidden="true"></div>
+        <p id="loading-text">Загрузка...</p>
+      </section>
+
+      <section class="card state-card hidden" id="success-card">
+        <h1 id="success-title">Привязать аккаунт</h1>
+        <p id="success-description">
+          Telegram передаст данные, чтобы подтвердить ваш Minecraft-аккаунт.
+        </p>
+        <div class="actions">
+          <button id="bind-button" class="btn primary">Привязать аккаунт</button>
+          <button id="success-back" class="btn ghost hidden">
+            Вернуться к профилю
+          </button>
+        </div>
+      </section>
+
+      <section class="card state-card hidden" id="error-card">
+        <h1>Что-то пошло не так</h1>
+        <p id="error-text">Попробуйте повторить действие чуть позже.</p>
+        <button id="retry-button" class="btn secondary">Попробовать снова</button>
+      </section>
+
+      <section class="card hidden" id="profile-card">
+        <header class="profile-header">
+          <div>
+            <h1>Профиль игрока</h1>
+            <p class="caption">Версия Railway Mini App</p>
+          </div>
+          <span id="profile-status" class="status-badge status-muted">Ожидание</span>
+        </header>
+
+        <div class="profile-grid">
+          <div class="profile-field">
+            <span class="label">Ник</span>
+            <span class="value" id="player-name">—</span>
+          </div>
+          <div class="profile-field">
+            <span class="label">Telegram</span>
+            <span class="value" id="player-telegram">—</span>
+          </div>
+          <div class="profile-field">
+            <span class="label">IP</span>
+            <span class="value" id="player-ip">—</span>
+          </div>
+          <div class="profile-field">
+            <span class="label">Дата последней проверки</span>
+            <span class="value" id="player-last-check">—</span>
+          </div>
+          <div class="profile-field full">
+            <span class="label">Статус верификации</span>
+            <span class="value" id="player-verified">—</span>
+          </div>
+        </div>
+
+        <div class="actions stack">
+          <button class="btn primary" id="set-password">
+            Создать пароль для Minecraft
+          </button>
+          <button class="btn secondary" id="change-name">Сменить никнейм</button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
