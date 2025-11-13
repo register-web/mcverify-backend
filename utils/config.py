@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_ENV_FILE = BASE_DIR / ".env"
 FALLBACK_ENV_FILE = BASE_DIR / ".env.example"
 DEFAULT_BOT_TOKEN = "7966124488:AAHLBrB13H4dKHQ-_DwL97Q8H_05WhVSSxA"
-DEFAULT_DATABASE_URL = "sqlite:///./mcverify.db"
+DEFAULT_DATABASE_URL = ""
 DEFAULT_BACKEND_URL = "https://mcverify.up.railway.app"
 DEFAULT_REVERIFY_DAYS = 3
 
@@ -35,6 +35,9 @@ def get_settings() -> Settings:
     database_url = os.getenv("DATABASE_URL", DEFAULT_DATABASE_URL).strip()
     backend_url = os.getenv("BACKEND_URL", DEFAULT_BACKEND_URL).strip()
     reverify_days = int(os.getenv("REVERIFY_DAYS", str(DEFAULT_REVERIFY_DAYS)))
+
+    if not database_url:
+        raise RuntimeError("DATABASE_URL is not configured")
 
     return Settings(
         bot_token=bot_token,

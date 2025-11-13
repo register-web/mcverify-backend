@@ -3,11 +3,9 @@ from __future__ import annotations
 from datetime import datetime
 
 from sqlalchemy import BigInteger, Boolean, DateTime, Integer, Text, func
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import Mapped, declarative_base, mapped_column
 
-
-class Base(DeclarativeBase):
-    pass
+Base = declarative_base()
 
 
 class Player(Base):
