@@ -25,6 +25,11 @@ settings = get_settings()
 async def test_endpoint() -> dict[str, str]:
     return {"msg": "ok"}
 
+@router.get("/health", tags=["health"])
+async def health_check() -> dict[str, str]:
+    return {"status": "ok"}
+
+
 
 def _player_to_response(player: models.Player) -> PlayerResponse:
     return PlayerResponse(
